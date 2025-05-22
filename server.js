@@ -3,10 +3,10 @@ import cors from 'cors'
 import 'dotenv/config'
 import connectDB from './config/mongodb.js'
 import cookieParser from 'cookie-parser'
-import userRouter from './routes/userRoute.js'
-import productRouter from './routes/productRoute.js'
-import cartRouter from './routes/cartRoute.js'
-import orderRouter from './routes/orderRoute.js'
+import userRouter from './api/routes/userRoute.js'
+import productRouter from './api/routes/productRoute.js'
+import cartRouter from './api/routes/cartRoute.js'
+import orderRouter from './api/routes/orderRoute.js'
 
 
 

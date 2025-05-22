@@ -1,6 +1,8 @@
-import OrderModel from "../models/orderModel.js";
-import userModel from "../models/userModel.js";
+// import OrderModel from "../../models/orderModel.js";
+// import userModel from "../../models/userModel.js";
 import Stripe from 'stripe';
+import userModel from '../models/userModel.js';
+import OrderModel from '../models/orderModel.js';
 
 const currency = 'usd';
 const deliveryCharge = 50;

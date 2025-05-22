@@ -1,7 +1,9 @@
 import validator from "validator";
-import userModel from "../models/userModel.js";
+// import userModel from "../models/userModel.js";
 import jwt from 'jsonwebtoken';
-import { redis } from "../config/redis.js";
+import userModel from "../models/userModel.js";
+// import { redis } from "../config/redis.js";
+// import userModel from "../../models/userModel.js";
 
 // Helper function to create JWT token
 const createToken = (id) => {
@@ -68,10 +70,10 @@ const registerUser = async (req, res) => {
         }
 
         const user = await userModel.create({ name, email, password, role });
-      
+
 
         const token = createToken(user._id);
-        setTokenCookie(res, token);  
+        setTokenCookie(res, token);
 
         res.status(201).json({
             success: true,
@@ -95,28 +97,28 @@ const registerUser = async (req, res) => {
 
 
 export const adminLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-      const token = jwt.sign({ email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign({ email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
-      // Set token in cookies for the admin
-      res.cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: 'Strict',
-        maxAge:7* 24 * 60 * 60 * 1000, // 1 day
-      });
+            // Set token in cookies for the admin
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'Strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 1 day
+            });
 
-      return res.json({ success: true, message: "Admin logged in successfully", token });
-    } else {
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
+            return res.json({ success: true, message: "Admin logged in successfully", token });
+        } else {
+            return res.status(401).json({ success: false, message: "Invalid credentials" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: error.message });
-  }
 };
 
 

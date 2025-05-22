@@ -11,10 +11,10 @@ const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.post("/logout",  logout);
-userRouter.post("/refresh-token", );
+userRouter.post("/logout", logout);
+userRouter.post("/refresh-token",);
 // userRouter.get("/profile", getProfile);
-userRouter.post("/admin",adminLogin)
+userRouter.post("/admin", adminLogin)
 
 
 

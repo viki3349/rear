@@ -4,7 +4,7 @@ import userModel from "../models/userModel.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
-    let token = req.cookies?.token; 
+    let token = req.cookies?.token;
 
     if (!token && req.headers.authorization) {
       token = req.headers.authorization.split(' ')[1]; // Extract from Bearer
@@ -16,11 +16,11 @@ export const protectRoute = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
-    
+
     if (decoded.role && decoded.role !== 'admin') {
       return res.status(403).json({ success: false, message: "Access denied - Admin only" });
     }
-    
+
 
     next(); // Proceed
   } catch (error) {
@@ -33,7 +33,7 @@ export const protectRoute = async (req, res, next) => {
 
 export const protectAdminRoute = (req, res, next) => {
   if (req.user.role !== 'admin') {
-      return res.status(403).json({ success: false, message: "Access denied - Admin only" });
+    return res.status(403).json({ success: false, message: "Access denied - Admin only" });
   }
   next(); // Proceed to the next middleware or route handler
 };
